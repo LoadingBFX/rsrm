@@ -9,6 +9,8 @@
 #'
 #' @return a list of Restriction enzymes combination
 #'
+#' @export
+#'
 #' @import seqinr
 #' @import stringr
 #'
@@ -36,7 +38,14 @@ findre <- function(dna, target, dataset = redata){
   cat("start at index", target.start, "end at index", target.end, '\n')
   cat("start at", seqinr::s2c(dna.seq)[pos[1]], 'end at', seqinr::s2c(dna.seq)[pos[2]], '\n')
 
-  cut_pos <- matrix(ncol = 3)
+  pos.data <- data.frame(
+                         'name' = target.name,
+                         "start" = target.start,
+                         "end" = target.end,
+                         "seq" = target.seq,
+                         row.names = "Target"
+                         )
+
 
   #get the cut postion of all enzymes
   for (i in 1:nrow(dataset)) {
@@ -45,20 +54,19 @@ findre <- function(dna, target, dataset = redata){
 
     #if found
     if (!any(is.na(pos))) {
-      #add to cut_pos
-      cut_pos <- rbind(cut_pos, pos)
+      pos.data <- rbind(pos.data, pos)
     }
   }
-  print(head(cut_pos))
+  print(head(pos.data))
 
-  cat( "nrow", nrow(cut_pos))
+  cat( "nrow", nrow(pos.data))
 
+  target_pos <- pos.data[1, ]
+  enz_pos <- pos.data[2:nrow(pos.data), ]
+  left <- pos.data[which(pos.data$end < target.start), ]
+  right <- pos.data[which(pos.data$start > target.end), ]
 
-  #subsetting
-  #feasible <- subset(cut_pos, )
-
-
-  return(TRUE)
+  return(list(target_pos, enz_pos, left, right))
 }
 
 
@@ -72,7 +80,7 @@ findre <- function(dna, target, dataset = redata){
 #'
 #' @return a FASTA file
 #'
-#'
+#' @export
 #'
 buildfas <- function(name, sequences, file_name){
   seqinr::write.fasta(sequences, name, file_name, as.string = TRUE)

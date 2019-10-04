@@ -20,8 +20,9 @@ cutpos <- function(dnaSeq, enz, dataset = redata) {
   #locate the cut position
   loc <- stringr::str_locate(dnaSeq, site_regex)
   if(!any(is.na(loc))){
-    enz_col <- matrix(enz, nrow = nrow(loc))
-    result <- cbind(enz_col, loc)
+    enz_name_seq <- data.frame("name" = enz, "seq" = siteSeq)
+    result <- cbind(enz_name_seq, as.data.frame(loc))
+
     return(result)
   } else {
     return(NA)
@@ -50,8 +51,8 @@ rs2regex <- function(rs) {
     if ((b != '_') & (b != "'")) {
       temp <- switch(b,
                      A = 'A', C = 'C', G = 'G', T = 'T',
-                     r = 'A|G', y = 'C|T', m = 'A|C', k = 'G|T',
-                     s = 'G|C', w = 'A|T', h = '[ATC]', b = '[GTC]',
+                     r = '[AG]', y = '[CT]', m = '[AC]', k = '[GT]',
+                     s = '[GC]', w = '[AT]', h = '[ATC]', b = '[GTC]',
                      v = '[GAC]', d = '[GAT]', n = '[ATCG]'
                      )
       rexgex <- c(rexgex, temp)
