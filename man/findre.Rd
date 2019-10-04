@@ -2,21 +2,38 @@
 % Please edit documentation in R/findre.R
 \name{findre}
 \alias{findre}
-\title{Find the Restriction enzymes which can produce the target sequence}
+\title{Find the Restriction Sites on given DNA sequence}
 \usage{
 findre(dna, target, dataset = redata)
 }
 \arguments{
-\item{dna}{The FASTA file of the sequence}
+\item{dna}{The FASTA file of the sequence, If you don't have FASTA file of sequence,
+you can use \code{\link{buildfas}} to build your FASTA file.}
 
-\item{target}{The FASTA file of the target sequence you want to produce}
+\item{target}{The FASTA file of the target sequence you want to produce.
+same with \code{dna}, you can use \code{\link{buildfas}} to build your FASTA file.}
 
-\item{dataset}{The dataset stores the information of enzymes}
+\item{dataset}{The dataset stores the information of enzymes with two column, name and site.}
 }
 \value{
-a list of Restriction enzymes combination
+a list of data frames, first is the location of target,
+  second is the position of each enzyme cut at,
+  third is the position of each enzyme cut at the left side of target,
+  fourth is the position of each enzyme cut at the right side of taget.
 }
 \description{
-A function that find a combination of the restriction enzymes
-which can produce a fragment contains target sequnce by digest reaction
+A function that find Restriction Sites on given DNA sequence by given restriction enzyme dataset.
+}
+\examples{
+seq1 <- 'GGCAGATTCCCCCTAGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
+ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
+ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
+name1 <- "Example gene for test findre (EGFTF)"
+seq2 <- "ACGTCG"
+name2 <- "Target"
+file1 <- buildfas(name1, seq1, 'tempfasta1.fas')
+file2 <- buildfas(name2, seq2, 'tempfasta2.fas')
+result <- findre(file1, file2)
+unlink('tempfasta1.fas')
+unlink('tempfasta2.fas')
 }

@@ -7,15 +7,24 @@
 buildfas(name, sequences, file_name)
 }
 \arguments{
-\item{name}{The name of the sequence}
+\item{name}{String, the name of the sequence}
 
-\item{sequences}{The string of sequences}
+\item{sequences}{String, the sequences}
 
-\item{file_name}{The name of FASTA file}
+\item{file_name}{String, The name of FASTA file}
 }
 \value{
-a FASTA file
+Create a FASTA file and return the it's name
 }
 \description{
 A function helps users to build their own FASTA file
+}
+\examples{
+seq <- "ACGTCG"
+name <- "Target"
+file <- buildfas(name, seq, 'tempfasta.fas')
+fas_seq <- seqinr::read.fasta(file, as.string = TRUE)
+attr(fas_seq, "name")
+toString(fas_seq)
+
 }

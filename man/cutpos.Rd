@@ -11,11 +11,17 @@ cutpos(dnaSeq, enz, dataset = redata)
 
 \item{enz}{the name of enzyme}
 
-\item{dataset}{the data used to store enzyme info}
+\item{dataset}{the data used to store enzyme info (name and site)}
 }
 \value{
-a matrix of cut position
+a data frame of cut position (name, seq, start and end), if not found, return NA.
 }
 \description{
-Find the position cut by given enzyme
+A function to locate the cut site of given enzyme and enzyme dataset.
+}
+\examples{
+dnaSeq <- 'ATCGGTTATAAGCAT'
+enz <- 'AanI'
+cutpos(dnaSeq, enz, redata)
+
 }

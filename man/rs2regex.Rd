@@ -10,8 +10,8 @@ rs2regex(rs)
 \item{rs}{a string of recognition site}
 }
 \value{
-a string of regex
+a string of regular expression
 }
 \description{
-convert recognition site to regular expression
+A helper function for \code{cutpos} to convert recognition site to regular expression.
 }

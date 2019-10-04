@@ -2,9 +2,9 @@
 % Please edit documentation in R/rsplot.R
 \name{rsplot}
 \alias{rsplot}
-\title{plot restriction map}
+\title{Visualize the distribution of restriction site arround the target sequence}
 \usage{
-rsplot(dna, target, dataset, num)
+rsplot(dna, target, dataset = redata, num = 10)
 }
 \arguments{
 \item{dna}{The FASTA file of the sequence}
@@ -15,6 +15,25 @@ rsplot(dna, target, dataset, num)
 
 \item{num}{The number of enzyme on the left/right side of target sequence}
 }
+\value{
+the distribution of restriction site arround the target sequence
+}
 \description{
-plot restriction map
+This function will plot the restriction site map by given number of sites
+you can choose how many sites at left/right of target to display.
+}
+\examples{
+seq1 <- 'GGCAGATTCCCCCTAGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
+ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
+ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
+name1 <- "Example gene for test findre (EGFTF)"
+seq2 <- "ACGTCG"
+name2 <- "Target"
+file1 <- buildfas(name1, seq1, 'tempfasta1.fas')
+file2 <- buildfas(name2, seq2, 'tempfasta2.fas')
+result <- rsplot(file1, file2, dataset = redata)
+unlink('tempfasta1.fas')
+unlink('tempfasta2.fas')
+
+
 }
