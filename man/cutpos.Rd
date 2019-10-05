@@ -4,10 +4,10 @@
 \alias{cutpos}
 \title{Find the position cut by given enzyme}
 \usage{
-cutpos(dnaSeq, enz, dataset = redata)
+cutpos(dnaseq, enz, dataset = redata)
 }
 \arguments{
-\item{dnaSeq}{a string of DNA sequence}
+\item{dnaseq}{a string of DNA sequence}
 
 \item{enz}{the name of enzyme}
 

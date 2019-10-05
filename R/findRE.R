@@ -13,12 +13,12 @@
 #'   third is the position of each enzyme cut at the left side of target,
 #'   fourth is the position of each enzyme cut at the right side of taget.
 #' @examples
-#' seq1 <- 'GGCAGATTCCCCCTAGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
+#' seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
 #' ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
 #' ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
-#' name1 <- "Example gene for test findre (EGFTF)"
-#' seq2 <- "ACGTCG"
-#' name2 <- "Target"
+#' name1 <- 'Example gene for test findre (EGFTF)'
+#' seq2 <- 'ACGTCG'
+#' name2 <- 'Target'
 #' file1 <- buildfas(name1, seq1, 'tempfasta1.fas')
 #' file2 <- buildfas(name2, seq2, 'tempfasta2.fas')
 #' result <- findre(file1, file2)
@@ -31,8 +31,6 @@
 #'
 #'
 findre <- function(dna, target, dataset = redata) {
-
-
     # read FASTA files
     fas_dna <- seqinr::read.fasta(dna, as.string = TRUE)
     fas_target <- seqinr::read.fasta(target, as.string = TRUE)
@@ -46,14 +44,19 @@ findre <- function(dna, target, dataset = redata) {
 
     # locate the target sequence
     pos <- stringr::str_locate(dna.seq, target.seq)
-    cat(toString(nrow(pos)), "hits found\n")
+
+    if (any(is.na(pos))) stop("target sequence not found")
+
     print(pos)
     target.start <- pos[1, 1]
     target.end <- pos[1, 2]
     cat("start at index", target.start, "end at index", target.end, "\n")
 
-    pos.data <- data.frame(name = target.name, start = target.start, end = target.end, seq = target.seq, row.names = "Target")
-
+    pos.data <- data.frame(name = target.name,
+                           start = target.start,
+                           end = target.end,
+                           seq = target.seq,
+                           row.names = "Target")
 
     # get the cut postion of all enzymes
     for (i in 1:nrow(dataset)) {
@@ -71,7 +74,7 @@ findre <- function(dna, target, dataset = redata) {
     left <- pos.data[which(pos.data$end < target.start), ]
     right <- pos.data[which(pos.data$start > target.end), ]
 
-    cat(nrow(pos.data), 'Restriction Site found on', dna.name, '\n')
+    cat(nrow(pos.data), "Restriction Site found on", dna.name, "\n")
     print(head(enz_pos))
 
     return(list(target_pos, enz_pos, left, right))
@@ -88,11 +91,11 @@ findre <- function(dna, target, dataset = redata) {
 #'
 #' @return Create a FASTA file and return the it's name
 #' @examples
-#' seq <- "ACGTCG"
-#' name <- "Target"
+#' seq <- 'ACGTCG'
+#' name <- 'Target'
 #' file <- buildfas(name, seq, 'tempfasta.fas')
 #' fas_seq <- seqinr::read.fasta(file, as.string = TRUE)
-#' attr(fas_seq, "name")
+#' attr(fas_seq, 'name')
 #' toString(fas_seq)
 #'
 #' @export

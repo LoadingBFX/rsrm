@@ -1,21 +1,21 @@
 Package: rsrm
 Type: Package
 Title: Locating restriction sites around specific target sequence 
-    and construct restriction map by fragments.
+    and construct restriction map by fragments
 Version: 0.1.0
-Author@R: person("Fanxing", "Bu", email = "BFX3.1415@gmail.com", 
-    role = c("aut", "cre"))
+Authors@R: person("Fanxing", "Bu", email = "BFX3.1415@gmail.com", role = c("aut", "cre"))
 Maintainer: Fanxing Bu <BFX3.1415@gmail.com>
 Description: Locating restriction sites around specific target sequence 
     and construct restriction map by fragments.
-Depends: R (>= 3.6.1)
+Depends: R (>= 3.1.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Imports: 
+Imports:
     stringr,
     seqinr,
+    utils,
     ggplot2
 Suggests: 
     testthat

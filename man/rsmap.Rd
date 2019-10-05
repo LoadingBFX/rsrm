@@ -36,6 +36,6 @@ frag2 <- c(50, 25, 20, 5)
 dou_dig <- c(25, 25, 25, 20, 5)
 enz1 <- 'enz1'
 enz2 <- 'enz2'
-rsmap(enz1, frag1, enz2, frag2, bi_dig)
+rsmap(enz1, frag1, enz2, frag2, dou_dig)
 
 }

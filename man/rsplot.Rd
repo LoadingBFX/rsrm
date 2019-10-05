@@ -23,12 +23,12 @@ This function will plot the restriction site map by given number of sites
 you can choose how many sites at left/right of target to display.
 }
 \examples{
-seq1 <- 'GGCAGATTCCCCCTAGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
+seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
 ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
 ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
-name1 <- "Example gene for test findre (EGFTF)"
-seq2 <- "ACGTCG"
-name2 <- "Target"
+name1 <- 'Example gene for test findre (EGFTF)'
+seq2 <- 'ACGTCG'
+name2 <- 'Target'
 file1 <- buildfas(name1, seq1, 'tempfasta1.fas')
 file2 <- buildfas(name2, seq2, 'tempfasta2.fas')
 result <- rsplot(file1, file2, dataset = redata)

@@ -20,11 +20,11 @@ Create a FASTA file and return the it's name
 A function helps users to build their own FASTA file
 }
 \examples{
-seq <- "ACGTCG"
-name <- "Target"
+seq <- 'ACGTCG'
+name <- 'Target'
 file <- buildfas(name, seq, 'tempfasta.fas')
 fas_seq <- seqinr::read.fasta(file, as.string = TRUE)
-attr(fas_seq, "name")
+attr(fas_seq, 'name')
 toString(fas_seq)
 
 }

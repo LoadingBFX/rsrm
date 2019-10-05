@@ -25,12 +25,12 @@ a list of data frames, first is the location of target,
 A function that find Restriction Sites on given DNA sequence by given restriction enzyme dataset.
 }
 \examples{
-seq1 <- 'GGCAGATTCCCCCTAGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
+seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
 ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
 ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
-name1 <- "Example gene for test findre (EGFTF)"
-seq2 <- "ACGTCG"
-name2 <- "Target"
+name1 <- 'Example gene for test findre (EGFTF)'
+seq2 <- 'ACGTCG'
+name2 <- 'Target'
 file1 <- buildfas(name1, seq1, 'tempfasta1.fas')
 file2 <- buildfas(name2, seq2, 'tempfasta2.fas')
 result <- findre(file1, file2)
