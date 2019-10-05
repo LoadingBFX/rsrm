@@ -4,7 +4,7 @@
 \alias{rsmap}
 \title{Construct restriction map by given fragments}
 \usage{
-rsmap(enz1, frag1, enz2, frag2, dou_dig, name = "Test Seq")
+rsmap(enz1, frag1, enz2, frag2, dou_dig, name = "Unknown Sequence")
 }
 \arguments{
 \item{enz1}{the name of first enzyme.}

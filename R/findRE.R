@@ -11,7 +11,7 @@
 #' @return a list of data frames, first is the location of target,
 #'   second is the position of each enzyme cut at,
 #'   third is the position of each enzyme cut at the left side of target,
-#'   fourth is the position of each enzyme cut at the right side of taget.
+#'   fourth is the position of each enzyme cut at the right side of target.
 #' @examples
 #' seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
 #' ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
@@ -50,7 +50,7 @@ findre <- function(dna, target, dataset = redata) {
     print(pos)
     target.start <- pos[1, 1]
     target.end <- pos[1, 2]
-    cat("start at index", target.start, "end at index", target.end, "\n")
+    cat("Target starts at index", target.start, "ends at index", target.end, "\n")
 
     pos.data <- data.frame(name = target.name,
                            start = target.start,
@@ -69,9 +69,17 @@ findre <- function(dna, target, dataset = redata) {
         }
     }
 
+
+    # data frame of target position
     target_pos <- pos.data[1, ]
+
+    # data frame of all enzymes which has RS on DNA.
     enz_pos <- pos.data[2:nrow(pos.data), ]
+
+    # data frame of enzymes which has RS on the left side of target
     left <- pos.data[which(pos.data$end < target.start), ]
+
+    # data frame of enzymes which has RS on the right side of target
     right <- pos.data[which(pos.data$start > target.end), ]
 
     cat(nrow(pos.data), "Restriction Site found on", dna.name, "\n")

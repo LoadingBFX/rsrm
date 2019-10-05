@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility.R
 \name{rs2regex}
 \alias{rs2regex}
-\title{convert recognition site to regular expression}
+\title{Convert recognition site to regular expression}
 \usage{
 rs2regex(rs)
 }

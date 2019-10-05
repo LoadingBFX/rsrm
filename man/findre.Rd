@@ -19,7 +19,7 @@ same with \code{dna}, you can use \code{\link{buildfas}} to build your FASTA fil
 a list of data frames, first is the location of target,
   second is the position of each enzyme cut at,
   third is the position of each enzyme cut at the left side of target,
-  fourth is the position of each enzyme cut at the right side of taget.
+  fourth is the position of each enzyme cut at the right side of target.
 }
 \description{
 A function that find Restriction Sites on given DNA sequence by given restriction enzyme dataset.

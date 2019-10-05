@@ -45,8 +45,13 @@ rsplot <- function(dna, target, dataset = redata, num = 10) {
     left <- l[order(-l$end), ]
     right <- r[order(r$start), ]
 
+    if ( any(num > c(nrow(left), nrow(right)) )) {
+        num <- min(c(nrow(left), nrow(right)))
+        cat("Only", num, "RS can be found")
+    }
+
     plot_data <- rbind(target_pos, left[1:num, ], right[1:num, ])
-    title <- str_c(" Restriction Site Arround ", target.name)
+    title <- stringr::str_c(" Restriction Site Around ", target.name)
 
     ggplot(plot_data, aes(x = start, y = name, color = name)) +
         geom_point(shape = 1, size = 6) +

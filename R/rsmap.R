@@ -29,7 +29,7 @@
 #' @import ggplot2
 #' @import stringr
 #'
-rsmap <- function(enz1, frag1, enz2, frag2, dou_dig, name = "Unknow Seq") {
+rsmap <- function(enz1, frag1, enz2, frag2, dou_dig, name = "Unknown Sequence") {
 
     cat("INPUT QUESTION:",
         "\n------",
@@ -87,6 +87,8 @@ rsmap <- function(enz1, frag1, enz2, frag2, dou_dig, name = "Unknow Seq") {
         found <- check_dou(frag1, frag2, dou_dig)
         timer <- timer + 1
     }
+
+    if (timer > limit) stop("No feasible solution found")
 
     d1 <- data.frame(xval = frag1,
                      yval = 5,

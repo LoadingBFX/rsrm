@@ -24,7 +24,7 @@ utils::globalVariables(c("Restriction_Enzymes","name",
 #'
 cutpos <- function(dnaseq, enz, dataset = redata) {
 
-    # sel enz in dataset, find recognition site
+    # select the enz in dataset, find recognition site
     site_seq <- toString(subset(dataset, name == enz, select = site)[1, 1])
 
     # convert recognition site to regular expression
@@ -43,7 +43,7 @@ cutpos <- function(dnaseq, enz, dataset = redata) {
 }
 
 
-#' convert recognition site to regular expression
+#' Convert recognition site to regular expression
 #'
 #'A helper function for \code{cutpos} to convert recognition site to regular expression.
 #'
