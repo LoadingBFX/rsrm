@@ -1,7 +1,7 @@
 # to avoid "no visible binding for global variable" note
 utils::globalVariables(c("Restriction_Enzymes","name",
                          "redata", "site","head",
-                         "start", "xval", "yval"))
+                         "start", "xval", "yval", "end"))
 
 
 #' Find the position cut by given enzyme

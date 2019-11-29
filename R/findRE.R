@@ -1,17 +1,18 @@
 #' Find the Restriction Sites on given DNA sequence
 #'
 #' A function that find Restriction Sites on given DNA sequence by given restriction enzyme dataset.
+#' and plot the restriction site map by given number of sites you can choose how many sites at left/right of target to display.
 #'
-#' @param dna The FASTA file of the sequence, If you don't have FASTA file of sequence,
-#'   you can use \code{\link{buildfas}} to build your FASTA file.
-#' @param target The FASTA file of the target sequence you want to produce.
-#'   same with \code{dna}, you can use \code{\link{buildfas}} to build your FASTA file.
-#' @param  dataset The dataset stores the information of enzymes with two column, name and site.
+#' @param dnaName String, The name of the DNA sequence,
+#' @param dnaSeq String, The sequence of the DNA
+#' @param targetName String, The name of the target you want to produce, defualt is just "TARGET".
+#' @param targetSeq String, The sequence of the target you want to produce.
+#' @param dataset The dataset stores the information of enzymes with two column, name and site.
+#' @param num The number of enzyme on the left/right side of target sequence, defualt is 6
+#' @param title The title of the plot.defualt is "Restriction map around the target sequence"
 #'
-#' @return a list of data frames, first is the location of target,
-#'   second is the position of each enzyme cut at,
-#'   third is the position of each enzyme cut at the left side of target,
-#'   fourth is the position of each enzyme cut at the right side of target.
+#'
+#' @return the distribution of restriction site arround the target sequence
 #' @examples
 #' seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
 #' ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
@@ -19,49 +20,36 @@
 #' name1 <- 'Example gene for test findre (EGFTF)'
 #' seq2 <- 'ACGTCG'
 #' name2 <- 'Target'
-#' file1 <- buildfas(name1, seq1, 'tempfasta1.fas')
-#' file2 <- buildfas(name2, seq2, 'tempfasta2.fas')
-#' result <- findre(file1, file2)
-#' unlink('tempfasta1.fas')
-#' unlink('tempfasta2.fas')
+#' result <- findre(name1, seq1, name2, seq2)
+#' result
+#'
 #' @export
 #'
 #' @import seqinr
 #' @import stringr
+#' @import gggenes
 #'
-#'
-findre <- function(dna, target, dataset = redata) {
-    # read FASTA files
-    fas_dna <- seqinr::read.fasta(dna, as.string = TRUE)
-    fas_target <- seqinr::read.fasta(target, as.string = TRUE)
-
-    dna.name <- attr(fas_dna, "name")
-    dna.seq <- stringr::str_to_upper(toString(fas_dna))
-
-    target.name <- attr(fas_target, "name")
-    target.seq <- stringr::str_to_upper(toString(fas_target))
-
-
+findre <- function(dnaName, dnaSeq, targetName = "TARGET", targetSeq, dataset = redata, num = 6, title = "Restriction map around the target sequence") {
     # locate the target sequence
-    pos <- stringr::str_locate(dna.seq, target.seq)
+    pos <- stringr::str_locate(dnaSeq, targetSeq)
 
     if (any(is.na(pos))) stop("target sequence not found")
 
-    print(pos)
+    # Currently only use the first hit of target
     target.start <- pos[1, 1]
     target.end <- pos[1, 2]
-    cat("Target starts at index", target.start, "ends at index", target.end, "\n")
+    cat("# Target starts at index", target.start, "ends at index", target.end, "\n\n")
 
-    pos.data <- data.frame(name = target.name,
+    pos.data <- data.frame(name = targetName,
+                           seq = targetSeq,
                            start = target.start,
                            end = target.end,
-                           seq = target.seq,
-                           row.names = "Target")
+                           row.names = "0")
 
     # get the cut postion of all enzymes
     for (i in 1:nrow(dataset)) {
         enzname <- toString(dataset[i, ][["name"]])
-        pos <- cutpos(dna.seq, enzname, dataset)
+        pos <- cutpos(dnaSeq, enzname, dataset)
 
         # if found
         if (!any(is.na(pos))) {
@@ -82,34 +70,41 @@ findre <- function(dna, target, dataset = redata) {
     # data frame of enzymes which has RS on the right side of target
     right <- pos.data[which(pos.data$start > target.end), ]
 
-    cat(nrow(pos.data), "Restriction Site found on", dna.name, "\n")
+    cat(nrow(enz_pos), "Restriction Site found on", dnaName, "head of enzymes showed below\n")
     print(head(enz_pos))
 
-    return(list(target_pos, enz_pos, left, right))
+
+    #################### Visualization ############################
+    cat("\ngenerating the restriction map...\n")
+
+    # sort left(descending)/right(ascending)
+    left <- left[order(-left$end), ]
+    right <- right[order(right$start), ]
+
+    numLeft <- num
+    numRight <- num
+
+    if ( num > nrow(left)) {
+        numLeft <- nrow(left)
+        cat("Only", numLeft, "RS can be found at the left side of target\n")
+    }
+
+    if ( num > nrow(right)) {
+        numRight <- nrow(right)
+        cat("Only", numRight, "RS can be found at the right side of target")
+    }
+
+    cat("Totally", numLeft+numRight, "restriction sites displayed\n", numLeft, "on the left,", numRight, "on the right\n")
+
+    data <- rbind(target_pos, left[1:numLeft, ], right[1:numRight, ])
+
+    p <- ggplot2::ggplot(data, aes(xmin = start, xmax = end, y = name, fill = seq)) +
+        gggenes::geom_gene_arrow() +
+        xlab("Index of sequence") +
+        ylab("Restriction Enzymes") +
+        ggtitle(title) +
+        gggenes::theme_genes()
+
+    return(p)
 }
 
-
-#' Build FASTA file
-#'
-#' A function helps users to build their own FASTA file
-#'
-#' @param name String, the name of the sequence
-#' @param sequences String, the sequences
-#' @param file_name String, The name of FASTA file
-#'
-#' @return Create a FASTA file and return the it's name
-#' @examples
-#' seq <- 'ACGTCG'
-#' name <- 'Target'
-#' file <- buildfas(name, seq, 'tempfasta.fas')
-#' fas_seq <- seqinr::read.fasta(file, as.string = TRUE)
-#' attr(fas_seq, 'name')
-#' toString(fas_seq)
-#'
-#' @export
-#' @import seqinr
-#'
-buildfas <- function(name, sequences, file_name) {
-    seqinr::write.fasta(sequences, name, file_name, as.string = TRUE)
-    return(file_name)
-}

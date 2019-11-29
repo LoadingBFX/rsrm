@@ -16,6 +16,7 @@ Imports:
     stringr,
     seqinr,
     utils,
+    gggenes,
     ggplot2
 Suggests: 
     testthat

@@ -23,7 +23,8 @@
 #' dou_dig <- c(25, 25, 25, 20, 5)
 #' enz1 <- 'enz1'
 #' enz2 <- 'enz2'
-#' rsmap(enz1, frag1, enz2, frag2, dou_dig)
+#' result <- rsmap(enz1, frag1, enz2, frag2, dou_dig)
+#' result
 #'
 #' @export
 #' @import ggplot2
@@ -114,7 +115,7 @@ rsmap <- function(enz1, frag1, enz2, frag2, dou_dig, name = "Unknown Sequence") 
     title <- stringr::str_c("Restriction Site Map for ",
                    name, " (length = ", len1, ")")
 
-    ggplot(dat, aes(x = xval, y = yval,
+    p <- ggplot2::ggplot(dat, aes(x = xval, y = yval,
                     color = Restriction_Enzymes,
                     shape = Restriction_Enzymes)) +
       xlim(0, len1) +
@@ -125,6 +126,8 @@ rsmap <- function(enz1, frag1, enz2, frag2, dou_dig, name = "Unknown Sequence") 
         panel.grid = element_blank(), ) +
       coord_polar(start = 0) +
       labs(title = title)
+
+    return(p)
 }
 
 

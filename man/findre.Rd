@@ -4,25 +4,31 @@
 \alias{findre}
 \title{Find the Restriction Sites on given DNA sequence}
 \usage{
-findre(dna, target, dataset = redata)
+findre(dnaName, dnaSeq, targetName = "TARGET", targetSeq,
+  dataset = redata, num = 6,
+  title = "Restriction map around the target sequence")
 }
 \arguments{
-\item{dna}{The FASTA file of the sequence, If you don't have FASTA file of sequence,
-you can use \code{\link{buildfas}} to build your FASTA file.}
+\item{dnaName}{String, The name of the DNA sequence,}
 
-\item{target}{The FASTA file of the target sequence you want to produce.
-same with \code{dna}, you can use \code{\link{buildfas}} to build your FASTA file.}
+\item{dnaSeq}{String, The sequence of the DNA}
+
+\item{targetName}{String, The name of the target you want to produce, defualt is just "TARGET".}
+
+\item{targetSeq}{String, The sequence of the target you want to produce.}
 
 \item{dataset}{The dataset stores the information of enzymes with two column, name and site.}
+
+\item{num}{The number of enzyme on the left/right side of target sequence, defualt is 6}
+
+\item{title}{The title of the plot.defualt is "Restriction map around the target sequence"}
 }
 \value{
-a list of data frames, first is the location of target,
-  second is the position of each enzyme cut at,
-  third is the position of each enzyme cut at the left side of target,
-  fourth is the position of each enzyme cut at the right side of target.
+the distribution of restriction site arround the target sequence
 }
 \description{
 A function that find Restriction Sites on given DNA sequence by given restriction enzyme dataset.
+and plot the restriction site map by given number of sites you can choose how many sites at left/right of target to display.
 }
 \examples{
 seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
@@ -31,9 +37,7 @@ ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
 name1 <- 'Example gene for test findre (EGFTF)'
 seq2 <- 'ACGTCG'
 name2 <- 'Target'
-file1 <- buildfas(name1, seq1, 'tempfasta1.fas')
-file2 <- buildfas(name2, seq2, 'tempfasta2.fas')
-result <- findre(file1, file2)
-unlink('tempfasta1.fas')
-unlink('tempfasta2.fas')
+result <- findre(name1, seq1, name2, seq2)
+result
+
 }
