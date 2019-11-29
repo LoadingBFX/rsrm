@@ -1,0 +1,62 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# rsrm
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+## Description
+The goal of rsrm is to generate the distribution of Restriction Sites on given DNA sequence and also construct the Restriction Map with given single and double digests reaction result.
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+require("devtools")
+install_github("LoadingBFX/rsrm", build_vignettes = TRUE)
+library("rsrm")
+```
+
+To run the shinyApp:
+``` r
+<ShinyAppName>()
+```
+## Overview
+
+``` r
+browseVignettes("rsrm")
+```
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(rsrm)
+## basic example code
+```
+
+## Contributions
+``` r
+library("rsrm")
+lsf.str("package:rsrm")
+```
+
+## References
+
+## Acknowledgements
+This package was developed as part of an assessment for 2019 BCB410H: Applied Bioinformatics, University of Toronto, Toronto, CANADA.
