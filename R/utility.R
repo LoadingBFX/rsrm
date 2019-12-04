@@ -24,22 +24,22 @@ utils::globalVariables(c("Restriction_Enzymes","name",
 #'
 cutpos <- function(dnaseq, enz, dataset = redata) {
 
-    # select the enz in dataset, find recognition site
-    site_seq <- toString(subset(dataset, name == enz, select = site)[1, 1])
+  # select the enz in dataset, find recognition site
+  site_seq <- toString(subset(dataset, name == enz, select = site)[1, 1])
 
-    # convert recognition site to regular expression
-    site_regex <- rs2regex(site_seq)
+  # convert recognition site to regular expression
+  site_regex <- rs2regex(site_seq)
 
-    # locate the cut position
-    loc <- stringr::str_locate(dnaseq, site_regex)
-    if (!any(is.na(loc))) {
-        enz_name_seq <- data.frame(name = enz, seq = site_seq)
-        result <- cbind(enz_name_seq, as.data.frame(loc))
+  # locate the cut position
+  loc <- stringr::str_locate(dnaseq, site_regex)
+  if (!any(is.na(loc))) {
+    enz_name_seq <- data.frame(name = enz, seq = site_seq)
+    result <- cbind(enz_name_seq, as.data.frame(loc))
 
-        return(result)
-    } else {
-        return(NA)
-    }
+    return(result)
+  } else {
+    return(NA)
+  }
 }
 
 
@@ -48,11 +48,11 @@ cutpos <- function(dnaseq, enz, dataset = redata) {
 #'A helper function for \code{cutpos} to convert recognition site to regular expression.
 #'
 #'
-#'@param rs a string of recognition site
+#' @param rs a string of recognition site
 #'
-#'@return a string of regular expression
+#' @return a string of regular expression
 #'
-#'@import seqinr
+#' @import seqinr
 #'
 rs2regex <- function(rs) {
 
@@ -75,11 +75,15 @@ rs2regex <- function(rs) {
 #' Remove invalid characters in DNA sequence
 #'
 #' Remove FASTA header and all letters except A, T, C, G.
+#' This function is adapted for Dr.Steipe's function dbSanitizeSequence()
 #'
+#' @references
+#' Boris Steipe BCH441 - Bioinformatics
+#' http://steipe.biochemistry.utoronto.ca/abc/index.php/Bioinformatics_Main_Page
 #'
-#'@param s  chr DNA sequence, maybe not vaild
+#' @param s  chr DNA sequence, maybe not vaild
 #'
-#'@return chr a valid, uppercase, DNA sequence
+#' @return chr a valid, uppercase, DNA sequence
 #'
 sanitizeSeq <- function(s) {
 
@@ -90,3 +94,5 @@ sanitizeSeq <- function(s) {
   s <- toupper(gsub("[^atcgATCG]", "", s))
   return(s)
 }
+
+#[END]

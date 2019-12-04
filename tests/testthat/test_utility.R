@@ -28,3 +28,14 @@ test_that("correctness of cutpos()", {
   expect_equal(cut_pos$start[1], 6)
   expect_equal(cut_pos$end[1], 11)
 })
+
+
+test_that("sanitize DNA sequence", {
+  invaildDNAseq <- ">FASTA HEADER\nANcJDNK^&*()(@G.hnjlbT"
+  vaildDNAseq <- "ACGT"
+  result <- sanitizeSeq(invaildDNAseq)
+
+  expect_equal(vaildDNAseq, result)
+})
+
+#[END]

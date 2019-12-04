@@ -5,7 +5,7 @@
 #'
 #' @param dnaName String, The name of the DNA sequence,
 #' @param dnaSeq String, The sequence of the DNA
-#' @param targetName String, The name of the target you want to produce, defualt is just "TARGET".
+#' @param targetName String, The name of the target you want to produce, defualt is just "Target".
 #' @param targetSeq String, The sequence of the target you want to produce.
 #' @param dataset The dataset stores the information of enzymes with two column, name and site.
 #' @param num The number of enzyme on the left/right side of target sequence, defualt is 6
@@ -30,7 +30,10 @@
 #' @import ggplot2
 #' @import gggenes
 #'
-findre <- function(dnaName, dnaSeq, targetName = "Target", targetSeq, dataset = redata, num = 6, title = "Restriction map around the target sequence") {
+findre <- function(dnaName = 'example DNA Sequence', dnaSeq,
+                   targetName = "Target", targetSeq, dataset = redata,
+                   num = 6, title = "Restriction map around the target sequence") {
+    # clean the sequence to make sure the sequence is a vaild DNA sequence.
     dnaSeq <- sanitizeSeq(dnaSeq)
     targetSeq <- sanitizeSeq(targetSeq)
 
@@ -104,7 +107,14 @@ findre <- function(dnaName, dnaSeq, targetName = "Target", targetSeq, dataset = 
     cat("Totally", numLeft + numRight, "restriction sites displayed\n", numLeft, "on the left,", numRight, "on the right\n")
     x <- paste("Index of", dnaName)
 
-    data <- rbind(target_pos, left[1:numLeft, ], right[1:numRight, ])
+    data <- target_pos
+    if (!any(is.na(left[1:numLeft, ]))) {
+        data <- rbind(data, left[1:numLeft, ])
+    }
+
+    if (!any(is.na(right[1:numRight, ]))) {
+        data <- rbind(data, right[1:numRight, ])
+    }
 
     p <- ggplot2::ggplot(data, aes(xmin = start, xmax = end, y = name, fill = seq)) +
         gggenes::geom_gene_arrow() +
@@ -116,3 +126,4 @@ findre <- function(dnaName, dnaSeq, targetName = "Target", targetSeq, dataset = 
     return(p)
 }
 
+#[END]

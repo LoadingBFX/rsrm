@@ -4,8 +4,8 @@
 \alias{findre}
 \title{Find the Restriction Sites on given DNA sequence}
 \usage{
-findre(dnaName, dnaSeq, targetName = "Target", targetSeq,
-  dataset = redata, num = 6,
+findre(dnaName = "example DNA Sequence", dnaSeq, targetName = "Target",
+  targetSeq, dataset = redata, num = 6,
   title = "Restriction map around the target sequence")
 }
 \arguments{
@@ -13,7 +13,7 @@ findre(dnaName, dnaSeq, targetName = "Target", targetSeq,
 
 \item{dnaSeq}{String, The sequence of the DNA}
 
-\item{targetName}{String, The name of the target you want to produce, defualt is just "TARGET".}
+\item{targetName}{String, The name of the target you want to produce, defualt is just "Target".}
 
 \item{targetSeq}{String, The sequence of the target you want to produce.}
 

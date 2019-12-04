@@ -14,4 +14,9 @@ chr a valid, uppercase, DNA sequence
 }
 \description{
 Remove FASTA header and all letters except A, T, C, G.
+This function is adapted for Dr.Steipe's function dbSanitizeSequence()
+}
+\references{
+Boris Steipe BCH441 - Bioinformatics
+http://steipe.biochemistry.utoronto.ca/abc/index.php/Bioinformatics_Main_Page
 }
