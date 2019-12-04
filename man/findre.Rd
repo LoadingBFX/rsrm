@@ -4,7 +4,7 @@
 \alias{findre}
 \title{Find the Restriction Sites on given DNA sequence}
 \usage{
-findre(dnaName, dnaSeq, targetName = "TARGET", targetSeq,
+findre(dnaName, dnaSeq, targetName = "Target", targetSeq,
   dataset = redata, num = 6,
   title = "Restriction map around the target sequence")
 }
@@ -34,7 +34,7 @@ and plot the restriction site map by given number of sites you can choose how ma
 seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
 ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
 ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
-name1 <- 'Example gene for test findre (EGFTF)'
+name1 <- 'example DNA Sequence'
 seq2 <- 'ACGTCG'
 name2 <- 'Target'
 result <- findre(name1, seq1, name2, seq2)

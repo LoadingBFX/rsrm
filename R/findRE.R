@@ -17,7 +17,7 @@
 #' seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
 #' ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
 #' ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
-#' name1 <- 'Example gene for test findre (EGFTF)'
+#' name1 <- 'example DNA Sequence'
 #' seq2 <- 'ACGTCG'
 #' name2 <- 'Target'
 #' result <- findre(name1, seq1, name2, seq2)
@@ -27,13 +27,20 @@
 #'
 #' @import seqinr
 #' @import stringr
+#' @import ggplot2
 #' @import gggenes
 #'
-findre <- function(dnaName, dnaSeq, targetName = "TARGET", targetSeq, dataset = redata, num = 6, title = "Restriction map around the target sequence") {
+findre <- function(dnaName, dnaSeq, targetName = "Target", targetSeq, dataset = redata, num = 6, title = "Restriction map around the target sequence") {
+    dnaSeq <- sanitizeSeq(dnaSeq)
+    targetSeq <- sanitizeSeq(targetSeq)
+
     # locate the target sequence
     pos <- stringr::str_locate(dnaSeq, targetSeq)
 
-    if (any(is.na(pos))) stop("target sequence not found")
+    if (any(is.na(pos))) {
+        message("target sequence not found")
+        return(0)
+        }
 
     # Currently only use the first hit of target
     target.start <- pos[1, 1]
@@ -94,13 +101,14 @@ findre <- function(dnaName, dnaSeq, targetName = "TARGET", targetSeq, dataset = 
         cat("Only", numRight, "RS can be found at the right side of target")
     }
 
-    cat("Totally", numLeft+numRight, "restriction sites displayed\n", numLeft, "on the left,", numRight, "on the right\n")
+    cat("Totally", numLeft + numRight, "restriction sites displayed\n", numLeft, "on the left,", numRight, "on the right\n")
+    x <- paste("Index of", dnaName)
 
     data <- rbind(target_pos, left[1:numLeft, ], right[1:numRight, ])
 
     p <- ggplot2::ggplot(data, aes(xmin = start, xmax = end, y = name, fill = seq)) +
         gggenes::geom_gene_arrow() +
-        xlab("Index of sequence") +
+        xlab(x) +
         ylab("Restriction Enzymes") +
         ggtitle(title) +
         gggenes::theme_genes()

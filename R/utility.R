@@ -71,3 +71,22 @@ rs2regex <- function(rs) {
     }
     return(seqinr::c2s(rexgex))
 }
+
+#' Remove invalid characters in DNA sequence
+#'
+#' Remove FASTA header and all letters except A, T, C, G.
+#'
+#'
+#'@param s  chr DNA sequence, maybe not vaild
+#'
+#'@return chr a valid, uppercase, DNA sequence
+#'
+sanitizeSeq <- function(s) {
+
+  s <- as.character(unlist(s))    # convert complex object to plain chr vector
+  s <- unlist(strsplit(s, "\n"))  # split up at linebreaks, if any
+  s <- s[! grepl("^>", s)]        # drop all lines beginning">" (FASTA header)
+  s <- paste(s, collapse="")      # combine into single string
+  s <- toupper(gsub("[^atcgATCG]", "", s))
+  return(s)
+}
