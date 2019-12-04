@@ -1,0 +1,12 @@
+citHeader("To cite rsrm in publications use:")
+
+citEntry(
+  entry    = "Unpublished",
+  title    = "rsrm",
+  author   = "Fanxing Bu",
+  note     = "Unpublished",
+  year     = "2019",
+  textVersion = paste(
+
+  )
+)
