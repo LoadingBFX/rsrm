@@ -43,13 +43,44 @@ browseVignettes("rsrm")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
 
-```{r example}
-library(rsrm)
-## basic example code
-```
+* rsrm stands for Restriction Site and Restriction Map. This will help you to generate the distribution of RS on given DNA sequence and also construct the RM with given single and double digests reaction result.
 
+* First function of rsrm package is RS. Locating the restriction sites around target sequnce.
+  + ```findre()``` will find all of the positions can be cut by the enzymes in dataset. You can set the number of enzymes to display in the plot. Default value is 6, which means 6 enzymes will be displayed on the plot for both side of target sequence (totally 12 sites, 6 for left, 6 for right, 1 for target, if there are enough sites.).
+    example:
+    ```r
+    seq1 <- 'GGCAGATTCCCCCTAACGTCGGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
+    ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
+    ATGAGAGCCCTCACACTCCTCGCCCTATTGGCCCTGGCCGCACTTTGCATCGCTGGCCAGGCAGGTGAGTGCCCC'
+    name1 <- 'Example gene for test findre (EGFTF)'
+    seq2 <- 'ACGTCG'
+    name2 <- 'Target'
+    result <- findre(name1, seq1, name2, seq2)
+    result
+    ```
+    ![](./inst/extdata/RSplot.png)
+    
+* Second function is to construct RM for unknown sequence
+  + Everyone who took BCH Course must has see this kind of question on exam
+    ```
+    Unknown sequence and fragment obtained in single and double digests reaction were:
+    EcoRI: 70, 30kb
+    HaeIII: 60, 40kb
+    EcoRI + HaeIII: 40, 30, 20, 10kb
+    Q: construct a restriction map of unknown sequence.
+    ```
+    Now you can easily put single and double digests reaction result in ```rsmap()``` function to construct thr RM for     you
+    ```r
+    frag1 <- c(70, 30)
+    frag2 <- c(60, 40)
+    dou_dig <- c(40, 30, 20, 10)
+    enz1 <- "EcoRI"
+    enz2 <- "HaeIII"
+    rsmap(enz1, frag1, enz2, frag2, dou_dig)
+    ```
+    ![](./inst/extdata/RSMap.png)
+    
 ## Contributions
 ``` r
 library("rsrm")
@@ -57,6 +88,7 @@ lsf.str("package:rsrm")
 ```
 
 ## References
+Scrucca L., Fop M., Murphy T. B. and Raftery A. E. (2016) mclust 5: clustering, classification and density estimation using Gaussian finite mixture models The R Journal 8/1, pp. 205-233 https://cran.r-project.org/web/packages/mclust/vignettes/mclust.html
 
 ## Acknowledgements
 This package was developed as part of an assessment for 2019 BCB410H: Applied Bioinformatics, University of Toronto, Toronto, CANADA.

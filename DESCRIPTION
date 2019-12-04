@@ -17,6 +17,10 @@ Imports:
     seqinr,
     utils,
     gggenes,
-    ggplot2
+    ggplot2,
+    shiny
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
